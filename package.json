@@ -8,6 +8,7 @@
   "dependencies": {
     "@elysiajs/cors": "^1.0.2",
     "elysia": "latest",
+    "http-status-codes": "^2.3.0",
     "mongoose": "^8.3.1"
   },
   "devDependencies": {

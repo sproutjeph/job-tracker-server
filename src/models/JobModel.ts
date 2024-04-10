@@ -1,9 +1,21 @@
-import mongoose from "mongoose";
 import { JOB_STATUS, JOB_TYPE } from "../utils/constants";
+import mongoose from "mongoose";
+
+export interface IJob extends mongoose.Document {
+  company: string;
+  position: string;
+  jobStatus: string;
+  jobType: string;
+  jobLocation?: string;
+  createdAt?: Date;
+  jobLink?: string;
+  createdBy: mongoose.Types.ObjectId;
+}
+
 const JobSchema = new mongoose.Schema(
   {
-    company: String,
-    position: String,
+    company: { type: String, required: true },
+    position: { type: String, required: true },
     jobStatus: {
       type: String,
       enum: Object.values(JOB_STATUS),
@@ -22,8 +34,14 @@ const JobSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "User",
     },
+    jobLink: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true }
 );
 
-export default mongoose.model("Job", JobSchema);
+JobSchema.index({ company: 1, position: 1 }, { unique: true });
+
+export default mongoose.model<IJob>("Job", JobSchema);
