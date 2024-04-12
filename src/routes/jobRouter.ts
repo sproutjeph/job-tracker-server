@@ -1,9 +1,9 @@
 import { Elysia, t } from "elysia";
-import { jobs, create } from "../controllers/jobController";
+import { fetchAll, create } from "../controllers/jobController";
 import { JOB_STATUS, JOB_TYPE } from "../utils/constants";
 
 export default (app: Elysia) =>
-  app.get("/all-jobs", jobs).post("/create-job", create, {
+  app.get("/all-jobs", fetchAll).post("/create-job", create, {
     body: t.Object({
       company: t.String({ minLength: 1 }),
       position: t.String({ minLength: 1 }),
