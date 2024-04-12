@@ -1,7 +1,11 @@
-import { Context } from "elysia";
-import { createJob, getAllJobs } from "../services/Jobservices";
-import { IJob } from "../models/JobModel";
 import SuccessResponse from "../domain/types/generics/SuccessResponse";
+import {
+  createJob,
+  findByIdAndDelete,
+  getAllJobs,
+} from "../services/Jobservices";
+import JobModel, { IJob } from "../models/JobModel";
+import { Context, NotFoundError } from "elysia";
 
 export const fetchAll = async () => {
   const jobs = await getAllJobs();
@@ -23,3 +27,8 @@ export const create = async (
     message: "Job created",
   };
 };
+
+export async function deleteJob(context: Context) {
+  const { id } = context.params;
+  return await findByIdAndDelete(id);
+}

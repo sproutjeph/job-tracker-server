@@ -43,3 +43,19 @@ export async function createJob(payload: IJob) {
     throw error;
   }
 }
+
+export async function getJobById(id: string) {
+  const job = await JobModel.findById(id);
+  if (!job) {
+    throw new NotFoundError("Job not found");
+  }
+  return job;
+}
+
+export async function findByIdAndDelete(id: string) {
+  const job = await JobModel.findByIdAndDelete(id);
+  if (!job) {
+    throw new NotFoundError("Job not found");
+  }
+  return { job, message: "Job deleted" };
+}
